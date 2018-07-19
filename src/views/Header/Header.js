@@ -18,6 +18,7 @@ import HeaderBackButton from './HeaderBackButton';
 import ModularHeaderBackButton from './ModularHeaderBackButton';
 import HeaderStyleInterpolator from './HeaderStyleInterpolator';
 import withOrientation from '../withOrientation';
+import LinearGradient from 'react-native-linear-gradient';
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
@@ -423,12 +424,17 @@ class Header extends React.PureComponent {
       Platform.OS !== 'ios' ||
       transitionPreset !== 'uikit'
     ) {
-      return (
-        <View {...wrapperProps}>
-          {title}
-          {left}
-          {right}
-        </View>
+      return (<LinearGradient
+                style={StyleSheet.absoluteFillObject}
+                colors={['#42e695', '#3bb2b8']}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}>
+          <View {...wrapperProps}>
+            {title}
+            {left}
+            {right}
+          </View>
+        </LinearGradient>
       );
     } else {
       return (
@@ -609,6 +615,7 @@ const styles = StyleSheet.create({
   header: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'row',
+    top: Platform.OS === 'ios' ? 0 : Platform.Version>20 ? 20 : 0,
   },
   item: {
     backgroundColor: 'transparent',
